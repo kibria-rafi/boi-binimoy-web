@@ -11,7 +11,7 @@
         <div class="flex items-center justify-between gap-3 lg:gap-6">
             <a href="{{ route('home') }}" class="ui-title flex shrink-0 items-center text-xl font-extrabold tracking-tight text-slate-900">
                 <span>Boi Binimoy</span>
-                <span class="ml-2 rounded-full bg-amber-100 px-2 py-0.5 text-xs font-bold text-amber-800">Exchange</span>
+                <span class="ml-2 rounded-full bg-amber-100 px-2 py-0.5 text-xs font-bold text-amber-800">Library</span>
             </a>
 
             <details class="relative z-50 lg:hidden">

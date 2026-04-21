@@ -3,6 +3,7 @@
 @section('content')
     <div class="ui-panel mx-auto max-w-3xl p-6 sm:p-8">
         <div class="mb-4 border-b border-slate-200 pb-4">
+            <p class="book-tag mb-2">Private Reading Chat</p>
             <h1 class="ui-title text-2xl font-extrabold text-slate-900">Conversation</h1>
             <p class="mt-1 text-sm text-slate-600">
                 Book: <span class="font-semibold text-slate-800">{{ $exchangeRequest->book->title }}</span>
@@ -19,15 +20,15 @@
                 @endphp
 
                 <div class="flex {{ $isMine ? 'justify-end' : 'justify-start' }}">
-                    <article class="max-w-[85%] rounded-2xl px-4 py-3 text-sm shadow-sm {{ $isMine ? 'bg-teal-600 text-white' : 'bg-white text-slate-800 border border-slate-200' }}">
+                    <article class="max-w-[85%] rounded-2xl px-4 py-3 text-sm shadow-sm {{ $isMine ? 'bg-amber-700 text-white' : 'bg-white text-slate-800 border border-slate-200' }}">
                         <p>{{ $chatMessage->body }}</p>
-                        <p class="mt-2 text-[11px] {{ $isMine ? 'text-teal-100' : 'text-slate-400' }}">
+                        <p class="mt-2 text-[11px] {{ $isMine ? 'text-amber-100' : 'text-slate-400' }}">
                             {{ $chatMessage->sender->name }} • {{ $chatMessage->created_at->format('M d, h:i A') }}
                         </p>
                     </article>
                 </div>
             @empty
-                <p class="text-sm text-slate-600">No messages yet. Start the conversation below.</p>
+                <p class="text-sm text-slate-600">No messages yet. Start the conversation below and coordinate the lending handoff.</p>
             @endforelse
         </div>
 
@@ -35,14 +36,14 @@
             @csrf
             <div>
                 <label for="body" class="field-label">Your Message</label>
-                <textarea id="body" name="body" rows="3" required class="field-input" placeholder="Write a message...">{{ old('body') }}</textarea>
+                <textarea id="body" name="body" rows="3" required class="field-input" placeholder="Write a message about pickup, return, or reading notes...">{{ old('body') }}</textarea>
                 @error('body')
                     <p class="mt-1 text-xs font-semibold text-red-600">{{ $message }}</p>
                 @enderror
             </div>
 
             <div class="flex items-center gap-3">
-                <button type="submit" class="btn-primary">Send Message</button>
+                <button type="submit" class="btn-primary">Send Note</button>
                 <a href="{{ route('requests.index') }}" class="btn-secondary">Back to Requests</a>
             </div>
         </form>

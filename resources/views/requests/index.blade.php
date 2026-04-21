@@ -8,11 +8,12 @@
     @endif
 
     <div class="ui-panel mb-8 p-6">
-        <h1 class="ui-title text-3xl font-extrabold text-slate-900">Incoming Requests</h1>
-        <p class="mt-1 text-sm text-slate-600">Requests for books you own.</p>
+        <p class="book-tag mb-2">Lending Desk</p>
+        <h1 class="ui-title text-3xl font-extrabold text-slate-900">Incoming Borrow Requests</h1>
+        <p class="mt-1 text-sm text-slate-600">Borrow requests waiting on your lending shelf.</p>
 
         @if ($incomingRequests->isEmpty())
-            <p class="mt-4 text-sm text-slate-600">No incoming requests yet.</p>
+            <p class="mt-4 text-sm text-slate-600">No incoming borrow requests yet.</p>
         @else
             <div class="mt-4 space-y-3 md:hidden">
                 @foreach ($incomingRequests as $request)
@@ -24,7 +25,7 @@
                         };
                     @endphp
 
-                    <article class="rounded-xl border border-slate-200 bg-white p-4 shadow-sm">
+                    <article class="paper-card rounded-xl border border-slate-200 p-4 shadow-sm">
                         <p class="text-base font-bold text-slate-900">{{ $request->book->title }}</p>
                         <p class="mt-1 text-sm text-slate-600">Requester: {{ $request->requester->name }}</p>
                         <p class="mt-2 text-sm text-slate-600">{{ $request->message ?: '-' }}</p>
@@ -110,11 +111,12 @@
     </div>
 
     <div class="ui-panel p-6">
-        <h2 class="ui-title text-2xl font-extrabold text-slate-900">Outgoing Requests</h2>
-        <p class="mt-1 text-sm text-slate-600">Requests sent by you.</p>
+        <p class="book-tag mb-2">Borrow Log</p>
+        <h2 class="ui-title text-2xl font-extrabold text-slate-900">My Borrow Requests</h2>
+        <p class="mt-1 text-sm text-slate-600">Requests you sent to borrow books from the community.</p>
 
         @if ($outgoingRequests->isEmpty())
-            <p class="mt-4 text-sm text-slate-600">No outgoing requests yet.</p>
+            <p class="mt-4 text-sm text-slate-600">No borrow requests sent yet.</p>
         @else
             <div class="mt-4 space-y-3 md:hidden">
                 @foreach ($outgoingRequests as $request)
@@ -126,7 +128,7 @@
                         };
                     @endphp
 
-                    <article class="rounded-xl border border-slate-200 bg-white p-4 shadow-sm">
+                    <article class="paper-card rounded-xl border border-slate-200 p-4 shadow-sm">
                         <p class="text-base font-bold text-slate-900">{{ $request->book->title }}</p>
                         <p class="mt-1 text-sm text-slate-600">Owner: {{ $request->owner->name }}</p>
                         <p class="mt-2 text-sm text-slate-600">{{ $request->message ?: '-' }}</p>
