@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Book;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\View\View;
 
 class BookController extends Controller
@@ -62,5 +63,22 @@ class BookController extends Controller
         $books = auth()->user()->books()->latest()->get();
 
         return view('dashboard', compact('books'));
+    }
+
+    public function destroy(Request $request, int $id): RedirectResponse
+    {
+        $book = Book::findOrFail($id);
+
+        if ($book->user_id !== $request->user()->id) {
+            abort(403, 'You are not allowed to delete this book.');
+        }
+
+        if ($book->image) {
+            Storage::disk('public')->delete($book->image);
+        }
+
+        $book->delete();
+
+        return redirect()->route('dashboard')->with('success', 'Book deleted successfully.');
     }
 }

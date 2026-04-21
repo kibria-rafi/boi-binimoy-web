@@ -21,7 +21,14 @@
                         <h3 class="font-semibold text-gray-900">{{ $book->title }}</h3>
                         <p class="text-sm text-gray-600">{{ $book->author }}</p>
                         <p class="mt-2 text-xs text-gray-600">Status: {{ ucfirst($book->status) }}</p>
-                        <a href="{{ route('books.show', $book->id) }}" class="mt-2 inline-block text-sm font-medium text-gray-900 hover:underline">View</a>
+                        <div class="mt-3 flex items-center gap-3">
+                            <a href="{{ route('books.show', $book->id) }}" class="inline-block text-sm font-medium text-gray-900 hover:underline">View</a>
+                            <form action="{{ route('books.destroy', $book->id) }}" method="POST" onsubmit="return confirm('Are you sure you want to delete this book?')">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" class="text-sm font-medium text-red-600 hover:underline">Delete</button>
+                            </form>
+                        </div>
                     </article>
                 @endforeach
             </div>

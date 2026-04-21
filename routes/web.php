@@ -24,6 +24,9 @@ Route::middleware('auth')->group(function () {
 
     Route::get('/books/create', [BookController::class, 'create'])->name('books.create');
     Route::post('/books', [BookController::class, 'store'])->name('books.store');
+    Route::delete('/books/{id}', [BookController::class, 'destroy'])
+        ->where('id', '[0-9]+')
+        ->name('books.destroy');
 
     Route::get('/dashboard', [BookController::class, 'myBooks'])->name('dashboard');
 

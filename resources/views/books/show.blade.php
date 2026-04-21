@@ -25,6 +25,16 @@
                 </div>
 
                 @auth
+                    @if (auth()->id() === $book->user_id)
+                        <form action="{{ route('books.destroy', $book->id) }}" method="POST" class="mt-5" onsubmit="return confirm('Are you sure you want to delete this book?')">
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit" class="rounded-md bg-red-600 px-4 py-2 text-sm font-semibold text-white hover:bg-red-700">
+                                Delete Book
+                            </button>
+                        </form>
+                    @endif
+
                     @if (auth()->id() !== $book->user_id)
                         <div class="mt-5 rounded-md border border-gray-200 bg-gray-50 p-4">
                             <h2 class="text-sm font-semibold text-gray-900">Request Exchange</h2>
