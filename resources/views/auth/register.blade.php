@@ -1,11 +1,12 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="mx-auto w-full max-w-md rounded-lg border border-gray-200 bg-white p-6 shadow-sm">
-        <h1 class="mb-6 text-2xl font-semibold text-gray-900">Create Account</h1>
+    <div class="ui-panel mx-auto w-full max-w-md p-7 sm:p-8">
+        <h1 class="ui-title mb-2 text-3xl font-extrabold text-slate-900">Create Account</h1>
+        <p class="ui-subtle mb-6 text-sm">Join and start exchanging books with your community.</p>
 
         @if ($errors->any())
-            <div class="mb-4 rounded-md border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">
+            <div class="mb-4 rounded-lg border border-red-200 bg-red-50 px-4 py-3 text-sm font-semibold text-red-700">
                 {{ $errors->first() }}
             </div>
         @endif
@@ -14,37 +15,37 @@
             @csrf
 
             <div>
-                <label for="name" class="mb-1 block text-sm font-medium text-gray-700">Name</label>
+                <label for="name" class="field-label">Name</label>
                 <input id="name" name="name" type="text" value="{{ old('name') }}" required autofocus
-                    class="w-full rounded-md border border-gray-300 px-3 py-2 text-sm focus:border-gray-500 focus:outline-none" />
+                    class="field-input" />
             </div>
 
             <div>
-                <label for="email" class="mb-1 block text-sm font-medium text-gray-700">Email</label>
+                <label for="email" class="field-label">Email</label>
                 <input id="email" name="email" type="email" value="{{ old('email') }}" required
-                    class="w-full rounded-md border border-gray-300 px-3 py-2 text-sm focus:border-gray-500 focus:outline-none" />
+                    class="field-input" />
             </div>
 
             <div>
-                <label for="password" class="mb-1 block text-sm font-medium text-gray-700">Password</label>
+                <label for="password" class="field-label">Password</label>
                 <input id="password" name="password" type="password" required
-                    class="w-full rounded-md border border-gray-300 px-3 py-2 text-sm focus:border-gray-500 focus:outline-none" />
+                    class="field-input" />
             </div>
 
             <div>
-                <label for="password_confirmation" class="mb-1 block text-sm font-medium text-gray-700">Confirm Password</label>
+                <label for="password_confirmation" class="field-label">Confirm Password</label>
                 <input id="password_confirmation" name="password_confirmation" type="password" required
-                    class="w-full rounded-md border border-gray-300 px-3 py-2 text-sm focus:border-gray-500 focus:outline-none" />
+                    class="field-input" />
             </div>
 
-            <button type="submit" class="w-full rounded-md bg-gray-900 px-4 py-2 text-sm font-semibold text-white hover:bg-gray-800">
+            <button type="submit" class="btn-primary w-full">
                 Register
             </button>
         </form>
 
-        <p class="mt-4 text-sm text-gray-600">
+        <p class="mt-4 text-sm text-slate-600">
             Already have an account?
-            <a href="{{ route('login') }}" class="font-medium text-gray-900 hover:underline">Login</a>
+            <a href="{{ route('login') }}" class="font-bold text-teal-700 hover:underline">Login</a>
         </p>
     </div>
 @endsection

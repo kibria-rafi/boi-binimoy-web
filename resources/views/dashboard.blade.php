@@ -1,32 +1,32 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="mb-6 rounded-lg border border-gray-200 bg-white p-8 shadow-sm">
-        <h1 class="text-2xl font-semibold text-gray-900">Dashboard</h1>
-        <p class="mt-3 text-gray-600">Manage your books from here.</p>
+    <div class="ui-panel mb-6 p-8">
+        <h1 class="ui-title text-3xl font-extrabold text-slate-900">Dashboard</h1>
+        <p class="ui-subtle mt-3">Manage your listed books and update your exchange activity.</p>
     </div>
 
-    <div class="rounded-lg border border-gray-200 bg-white p-6 shadow-sm">
-        <div class="mb-4 flex items-center justify-between">
-            <h2 class="text-xl font-semibold text-gray-900">My Books</h2>
-            <a href="{{ route('books.create') }}" class="rounded-md bg-gray-900 px-4 py-2 text-sm font-semibold text-white hover:bg-gray-800">Add Book</a>
+    <div class="ui-panel p-6">
+        <div class="mb-4 flex flex-wrap items-center justify-between gap-3">
+            <h2 class="ui-title text-2xl font-extrabold text-slate-900">My Books</h2>
+            <a href="{{ route('books.create') }}" class="btn-primary">Add Book</a>
         </div>
 
         @if ($books->count() === 0)
-            <p class="text-sm text-gray-600">You have not added any books yet.</p>
+            <p class="text-sm text-slate-600">You have not added any books yet.</p>
         @else
-            <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+            <div class="stagger grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
                 @foreach ($books as $book)
-                    <article class="rounded-lg border border-gray-200 bg-gray-50 p-4">
-                        <h3 class="font-semibold text-gray-900">{{ $book->title }}</h3>
-                        <p class="text-sm text-gray-600">{{ $book->author }}</p>
-                        <p class="mt-2 text-xs text-gray-600">Status: {{ ucfirst($book->status) }}</p>
+                    <article class="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm transition hover:-translate-y-0.5">
+                        <h3 class="ui-title font-extrabold text-slate-900">{{ $book->title }}</h3>
+                        <p class="text-sm text-slate-600">{{ $book->author }}</p>
+                        <p class="mt-2 text-xs font-semibold text-slate-600">Status: {{ ucfirst($book->status) }}</p>
                         <div class="mt-3 flex items-center gap-3">
-                            <a href="{{ route('books.show', $book->id) }}" class="inline-block text-sm font-medium text-gray-900 hover:underline">View</a>
+                            <a href="{{ route('books.show', $book->id) }}" class="btn-linkish inline-block text-sm font-bold hover:underline">View</a>
                             <form action="{{ route('books.destroy', $book->id) }}" method="POST" onsubmit="return confirm('Are you sure you want to delete this book?')">
                                 @csrf
                                 @method('DELETE')
-                                <button type="submit" class="text-sm font-medium text-red-600 hover:underline">Delete</button>
+                                <button type="submit" class="text-sm font-bold text-rose-700 hover:underline">Delete</button>
                             </form>
                         </div>
                     </article>

@@ -1,11 +1,12 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="mx-auto w-full max-w-2xl rounded-lg border border-gray-200 bg-white p-6 shadow-sm">
-        <h1 class="mb-6 text-2xl font-semibold text-gray-900">Add Book</h1>
+    <div class="ui-panel mx-auto w-full max-w-2xl p-7 sm:p-8">
+        <h1 class="ui-title mb-2 text-3xl font-extrabold text-slate-900">Add Book</h1>
+        <p class="ui-subtle mb-6 text-sm">Fill in details so others can discover and request your book.</p>
 
         @if ($errors->any())
-            <div class="mb-4 rounded-md border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">
+            <div class="mb-4 rounded-lg border border-red-200 bg-red-50 px-4 py-3 text-sm font-semibold text-red-700">
                 {{ $errors->first() }}
             </div>
         @endif
@@ -14,27 +15,27 @@
             @csrf
 
             <div>
-                <label for="title" class="mb-1 block text-sm font-medium text-gray-700">Title</label>
+                <label for="title" class="field-label">Title</label>
                 <input id="title" name="title" type="text" value="{{ old('title') }}" required
-                    class="w-full rounded-md border border-gray-300 px-3 py-2 text-sm focus:border-gray-500 focus:outline-none" />
+                    class="field-input" />
             </div>
 
             <div>
-                <label for="author" class="mb-1 block text-sm font-medium text-gray-700">Author</label>
+                <label for="author" class="field-label">Author</label>
                 <input id="author" name="author" type="text" value="{{ old('author') }}" required
-                    class="w-full rounded-md border border-gray-300 px-3 py-2 text-sm focus:border-gray-500 focus:outline-none" />
+                    class="field-input" />
             </div>
 
             <div>
-                <label for="description" class="mb-1 block text-sm font-medium text-gray-700">Description</label>
+                <label for="description" class="field-label">Description</label>
                 <textarea id="description" name="description" rows="4" required
-                    class="w-full rounded-md border border-gray-300 px-3 py-2 text-sm focus:border-gray-500 focus:outline-none">{{ old('description') }}</textarea>
+                    class="field-input">{{ old('description') }}</textarea>
             </div>
 
             <div>
-                <label for="condition" class="mb-1 block text-sm font-medium text-gray-700">Condition</label>
+                <label for="condition" class="field-label">Condition</label>
                 <select id="condition" name="condition" required
-                    class="w-full rounded-md border border-gray-300 px-3 py-2 text-sm focus:border-gray-500 focus:outline-none">
+                    class="field-input">
                     <option value="">Select condition</option>
                     <option value="new" @selected(old('condition') === 'new')>New</option>
                     <option value="like_new" @selected(old('condition') === 'like_new')>Like New</option>
@@ -44,13 +45,13 @@
             </div>
 
             <div>
-                <label for="image" class="mb-1 block text-sm font-medium text-gray-700">Image</label>
+                <label for="image" class="field-label">Image</label>
                 <input id="image" name="image" type="file" accept="image/*"
-                    class="w-full rounded-md border border-gray-300 px-3 py-2 text-sm file:mr-4 file:rounded file:border-0 file:bg-gray-100 file:px-3 file:py-2" />
-                <p class="mt-1 text-xs text-gray-500">Optional. JPG, PNG, WEBP. Max 2MB.</p>
+                    class="field-input" />
+                <p class="mt-1 text-xs font-medium text-slate-500">Optional. JPG, PNG, WEBP. Max 2MB.</p>
             </div>
 
-            <button type="submit" class="rounded-md bg-gray-900 px-4 py-2 text-sm font-semibold text-white hover:bg-gray-800">
+            <button type="submit" class="btn-primary">
                 Save Book
             </button>
         </form>

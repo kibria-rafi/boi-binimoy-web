@@ -6,6 +6,223 @@
 @source '../**/*.js';
 
 @theme {
-    --font-sans: 'Instrument Sans', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
+    --font-sans: 'Space Grotesk', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
         'Segoe UI Symbol', 'Noto Color Emoji';
+}
+
+:root {
+    --bg: #f9f5ec;
+    --ink: #172230;
+    --muted: #617183;
+    --line: #d7d8de;
+    --card: #ffffff;
+    --brand: #0f766e;
+    --brand-strong: #115e59;
+    --accent: #f59e0b;
+    --danger: #be123c;
+}
+
+body {
+    background:
+        radial-gradient(circle at 0% 0%, rgba(245, 158, 11, 0.18), transparent 45%),
+        radial-gradient(circle at 95% 10%, rgba(15, 118, 110, 0.14), transparent 40%),
+        var(--bg);
+    color: var(--ink);
+}
+
+.site-shell {
+    position: relative;
+    overflow: hidden;
+}
+
+.site-shell::before,
+.site-shell::after {
+    content: '';
+    position: fixed;
+    pointer-events: none;
+    width: 18rem;
+    height: 18rem;
+    border-radius: 9999px;
+    filter: blur(48px);
+    opacity: 0.28;
+    z-index: -1;
+}
+
+.site-shell::before {
+    top: -6rem;
+    left: -3rem;
+    background: #f59e0b;
+}
+
+.site-shell::after {
+    bottom: -7rem;
+    right: -2rem;
+    background: #0f766e;
+}
+
+.page-enter {
+    animation: page-enter 0.55s ease-out both;
+}
+
+@keyframes page-enter {
+    from {
+        opacity: 0;
+        transform: translateY(12px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.ui-panel {
+    background: color-mix(in oklab, var(--card) 96%, #f6f7fb 4%);
+    border: 1px solid color-mix(in oklab, var(--line) 88%, #fff 12%);
+    border-radius: 1rem;
+    box-shadow: 0 12px 28px rgba(16, 24, 40, 0.07);
+}
+
+.ui-title {
+    font-family: 'Plus Jakarta Sans', var(--font-sans);
+    letter-spacing: -0.02em;
+}
+
+.ui-subtle {
+    color: var(--muted);
+}
+
+.btn-primary,
+.btn-secondary,
+.btn-danger,
+.btn-linkish {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.4rem;
+    border-radius: 0.7rem;
+    font-size: 0.9rem;
+    font-weight: 700;
+    min-height: 2.65rem;
+    padding-inline: 1rem;
+    transition: transform 0.18s ease, box-shadow 0.18s ease, background-color 0.18s ease;
+}
+
+.btn-primary {
+    background: linear-gradient(135deg, var(--brand), #0c948b);
+    color: #fff;
+    padding-block: 0.62rem;
+    box-shadow: 0 8px 18px rgba(15, 118, 110, 0.28);
+}
+
+.btn-primary:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 12px 24px rgba(15, 118, 110, 0.32);
+}
+
+.btn-secondary {
+    background: #fff;
+    color: var(--ink);
+    border: 1px solid var(--line);
+    padding-block: 0.58rem;
+}
+
+.btn-secondary:hover {
+    transform: translateY(-1px);
+    background: #f8fafc;
+}
+
+.btn-danger {
+    background: linear-gradient(135deg, #e11d48, var(--danger));
+    color: #fff;
+    padding-block: 0.58rem;
+}
+
+.btn-linkish {
+    color: var(--brand-strong);
+}
+
+.btn-primary:focus-visible,
+.btn-secondary:focus-visible,
+.btn-danger:focus-visible,
+.btn-linkish:focus-visible {
+    outline: 3px solid rgba(20, 184, 166, 0.28);
+    outline-offset: 2px;
+}
+
+.field-label {
+    margin-bottom: 0.4rem;
+    display: block;
+    font-size: 0.84rem;
+    font-weight: 700;
+    color: #334155;
+}
+
+.field-input {
+    width: 100%;
+    border-radius: 0.7rem;
+    border: 1px solid #cfd4dc;
+    background: #fff;
+    min-height: 2.65rem;
+    padding: 0.62rem 0.8rem;
+    font-size: 0.92rem;
+    color: #0f172a;
+    transition: border-color 0.18s ease, box-shadow 0.18s ease;
+}
+
+.field-input:focus {
+    border-color: #14b8a6;
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(20, 184, 166, 0.16);
+}
+
+.status-pill {
+    display: inline-flex;
+    border-radius: 9999px;
+    padding: 0.22rem 0.62rem;
+    font-size: 0.74rem;
+    font-weight: 700;
+}
+
+.stagger > * {
+    animation: card-rise 0.4s ease both;
+}
+
+.stagger > *:nth-child(2) { animation-delay: 0.05s; }
+.stagger > *:nth-child(3) { animation-delay: 0.1s; }
+.stagger > *:nth-child(4) { animation-delay: 0.15s; }
+.stagger > *:nth-child(5) { animation-delay: 0.2s; }
+
+@keyframes card-rise {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@media (max-width: 767px) {
+    .ui-panel {
+        border-radius: 0.85rem;
+    }
+
+    .ui-title {
+        line-height: 1.2;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .page-enter,
+    .stagger > * {
+        animation: none !important;
+    }
+
+    .btn-primary,
+    .btn-secondary,
+    .btn-danger,
+    .btn-linkish {
+        transition: none;
+    }
 }

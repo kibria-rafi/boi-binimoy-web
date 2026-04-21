@@ -1,5 +1,5 @@
-<footer class="border-t border-gray-200 bg-white">
-    <div class="mx-auto w-full max-w-6xl px-4 py-4 text-center text-sm text-gray-500 sm:px-6 lg:px-8">
-        &copy; {{ now()->year }} Boi Binimoy. All rights reserved.
+<footer class="mt-10 border-t border-slate-200/80 bg-white/80">
+    <div class="mx-auto w-full max-w-7xl px-4 py-6 text-center text-sm font-medium text-slate-500 sm:px-6 lg:px-10">
+        &copy; {{ now()->year }} Boi Binimoy. Share stories, not dust.
     </div>
 </footer>

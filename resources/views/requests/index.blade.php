@@ -2,30 +2,64 @@
 
 @section('content')
     @if ($errors->any())
-        <div class="mb-6 rounded-md border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">
+        <div class="mb-6 rounded-lg border border-red-200 bg-red-50 px-4 py-3 text-sm font-semibold text-red-700">
             {{ $errors->first() }}
         </div>
     @endif
 
-    <div class="mb-8 rounded-lg border border-gray-200 bg-white p-6 shadow-sm">
-        <h1 class="text-2xl font-semibold text-gray-900">Incoming Requests</h1>
-        <p class="mt-1 text-sm text-gray-600">Requests for books you own.</p>
+    <div class="ui-panel mb-8 p-6">
+        <h1 class="ui-title text-3xl font-extrabold text-slate-900">Incoming Requests</h1>
+        <p class="mt-1 text-sm text-slate-600">Requests for books you own.</p>
 
         @if ($incomingRequests->isEmpty())
-            <p class="mt-4 text-sm text-gray-600">No incoming requests yet.</p>
+            <p class="mt-4 text-sm text-slate-600">No incoming requests yet.</p>
         @else
-            <div class="mt-4 overflow-x-auto">
-                <table class="min-w-full divide-y divide-gray-200 text-sm">
-                    <thead class="bg-gray-50">
+            <div class="mt-4 space-y-3 md:hidden">
+                @foreach ($incomingRequests as $request)
+                    @php
+                        $incomingBadgeClass = match ($request->status) {
+                            'accepted' => 'bg-green-100 text-green-700',
+                            'rejected' => 'bg-red-100 text-red-700',
+                            default => 'bg-yellow-100 text-yellow-700',
+                        };
+                    @endphp
+
+                    <article class="rounded-xl border border-slate-200 bg-white p-4 shadow-sm">
+                        <p class="text-base font-bold text-slate-900">{{ $request->book->title }}</p>
+                        <p class="mt-1 text-sm text-slate-600">Requester: {{ $request->requester->name }}</p>
+                        <p class="mt-2 text-sm text-slate-600">{{ $request->message ?: '-' }}</p>
+                        <span class="{{ $incomingBadgeClass }} mt-3 inline-flex rounded-full px-2 py-1 text-xs font-semibold">
+                            {{ ucfirst($request->status) }}
+                        </span>
+
+                        @if ($request->status === 'pending')
+                            <div class="mt-3 grid grid-cols-2 gap-2">
+                                <form action="{{ route('requests.accept', $request->id) }}" method="POST">
+                                    @csrf
+                                    <button type="submit" class="w-full rounded-md bg-emerald-600 px-3 py-2 text-xs font-semibold text-white hover:bg-emerald-700">Accept</button>
+                                </form>
+                                <form action="{{ route('requests.reject', $request->id) }}" method="POST">
+                                    @csrf
+                                    <button type="submit" class="w-full rounded-md bg-rose-600 px-3 py-2 text-xs font-semibold text-white hover:bg-rose-700">Reject</button>
+                                </form>
+                            </div>
+                        @endif
+                    </article>
+                @endforeach
+            </div>
+
+            <div class="mt-4 hidden overflow-x-auto md:block">
+                <table class="min-w-full divide-y divide-slate-200 text-sm">
+                    <thead class="bg-slate-50">
                         <tr>
-                            <th class="px-4 py-3 text-left font-semibold text-gray-700">Book</th>
-                            <th class="px-4 py-3 text-left font-semibold text-gray-700">Requester</th>
-                            <th class="px-4 py-3 text-left font-semibold text-gray-700">Message</th>
-                            <th class="px-4 py-3 text-left font-semibold text-gray-700">Status</th>
-                            <th class="px-4 py-3 text-left font-semibold text-gray-700">Action</th>
+                            <th class="px-4 py-3 text-left font-bold text-slate-700">Book</th>
+                            <th class="px-4 py-3 text-left font-bold text-slate-700">Requester</th>
+                            <th class="px-4 py-3 text-left font-bold text-slate-700">Message</th>
+                            <th class="px-4 py-3 text-left font-bold text-slate-700">Status</th>
+                            <th class="px-4 py-3 text-left font-bold text-slate-700">Action</th>
                         </tr>
                     </thead>
-                    <tbody class="divide-y divide-gray-100 bg-white">
+                    <tbody class="divide-y divide-slate-100 bg-white">
                         @foreach ($incomingRequests as $request)
                             <tr>
                                 <td class="px-4 py-3">{{ $request->book->title }}</td>
@@ -48,15 +82,15 @@
                                         <div class="flex gap-2">
                                             <form action="{{ route('requests.accept', $request->id) }}" method="POST">
                                                 @csrf
-                                                <button type="submit" class="rounded-md bg-green-600 px-3 py-1.5 text-xs font-semibold text-white hover:bg-green-700">Accept</button>
+                                                <button type="submit" class="rounded-md bg-emerald-600 px-3 py-1.5 text-xs font-semibold text-white hover:bg-emerald-700">Accept</button>
                                             </form>
                                             <form action="{{ route('requests.reject', $request->id) }}" method="POST">
                                                 @csrf
-                                                <button type="submit" class="rounded-md bg-red-600 px-3 py-1.5 text-xs font-semibold text-white hover:bg-red-700">Reject</button>
+                                                <button type="submit" class="rounded-md bg-rose-600 px-3 py-1.5 text-xs font-semibold text-white hover:bg-rose-700">Reject</button>
                                             </form>
                                         </div>
                                     @else
-                                        <span class="text-xs text-gray-500">No action</span>
+                                        <span class="text-xs font-medium text-slate-500">No action</span>
                                     @endif
                                 </td>
                             </tr>
@@ -67,24 +101,45 @@
         @endif
     </div>
 
-    <div class="rounded-lg border border-gray-200 bg-white p-6 shadow-sm">
-        <h2 class="text-xl font-semibold text-gray-900">Outgoing Requests</h2>
-        <p class="mt-1 text-sm text-gray-600">Requests sent by you.</p>
+    <div class="ui-panel p-6">
+        <h2 class="ui-title text-2xl font-extrabold text-slate-900">Outgoing Requests</h2>
+        <p class="mt-1 text-sm text-slate-600">Requests sent by you.</p>
 
         @if ($outgoingRequests->isEmpty())
-            <p class="mt-4 text-sm text-gray-600">No outgoing requests yet.</p>
+            <p class="mt-4 text-sm text-slate-600">No outgoing requests yet.</p>
         @else
-            <div class="mt-4 overflow-x-auto">
-                <table class="min-w-full divide-y divide-gray-200 text-sm">
-                    <thead class="bg-gray-50">
+            <div class="mt-4 space-y-3 md:hidden">
+                @foreach ($outgoingRequests as $request)
+                    @php
+                        $outgoingBadgeClass = match ($request->status) {
+                            'accepted' => 'bg-green-100 text-green-700',
+                            'rejected' => 'bg-red-100 text-red-700',
+                            default => 'bg-yellow-100 text-yellow-700',
+                        };
+                    @endphp
+
+                    <article class="rounded-xl border border-slate-200 bg-white p-4 shadow-sm">
+                        <p class="text-base font-bold text-slate-900">{{ $request->book->title }}</p>
+                        <p class="mt-1 text-sm text-slate-600">Owner: {{ $request->owner->name }}</p>
+                        <p class="mt-2 text-sm text-slate-600">{{ $request->message ?: '-' }}</p>
+                        <span class="{{ $outgoingBadgeClass }} mt-3 inline-flex rounded-full px-2 py-1 text-xs font-semibold">
+                            {{ ucfirst($request->status) }}
+                        </span>
+                    </article>
+                @endforeach
+            </div>
+
+            <div class="mt-4 hidden overflow-x-auto md:block">
+                <table class="min-w-full divide-y divide-slate-200 text-sm">
+                    <thead class="bg-slate-50">
                         <tr>
-                            <th class="px-4 py-3 text-left font-semibold text-gray-700">Book</th>
-                            <th class="px-4 py-3 text-left font-semibold text-gray-700">Owner</th>
-                            <th class="px-4 py-3 text-left font-semibold text-gray-700">Message</th>
-                            <th class="px-4 py-3 text-left font-semibold text-gray-700">Status</th>
+                            <th class="px-4 py-3 text-left font-bold text-slate-700">Book</th>
+                            <th class="px-4 py-3 text-left font-bold text-slate-700">Owner</th>
+                            <th class="px-4 py-3 text-left font-bold text-slate-700">Message</th>
+                            <th class="px-4 py-3 text-left font-bold text-slate-700">Status</th>
                         </tr>
                     </thead>
-                    <tbody class="divide-y divide-gray-100 bg-white">
+                    <tbody class="divide-y divide-slate-100 bg-white">
                         @foreach ($outgoingRequests as $request)
                             <tr>
                                 <td class="px-4 py-3">{{ $request->book->title }}</td>
