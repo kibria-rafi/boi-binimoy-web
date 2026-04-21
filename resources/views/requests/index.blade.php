@@ -43,6 +43,10 @@
                                     <button type="submit" class="w-full rounded-md bg-rose-600 px-3 py-2 text-xs font-semibold text-white hover:bg-rose-700">Reject</button>
                                 </form>
                             </div>
+                        @elseif ($request->status === 'accepted')
+                            <a href="{{ route('messages.show', $request) }}" class="mt-3 inline-flex rounded-md bg-teal-600 px-3 py-2 text-xs font-semibold text-white hover:bg-teal-700">
+                                Message
+                            </a>
                         @endif
                     </article>
                 @endforeach
@@ -89,6 +93,10 @@
                                                 <button type="submit" class="rounded-md bg-rose-600 px-3 py-1.5 text-xs font-semibold text-white hover:bg-rose-700">Reject</button>
                                             </form>
                                         </div>
+                                    @elseif ($request->status === 'accepted')
+                                        <a href="{{ route('messages.show', $request) }}" class="inline-flex rounded-md bg-teal-600 px-3 py-1.5 text-xs font-semibold text-white hover:bg-teal-700">
+                                            Message
+                                        </a>
                                     @else
                                         <span class="text-xs font-medium text-slate-500">No action</span>
                                     @endif
@@ -125,6 +133,12 @@
                         <span class="{{ $outgoingBadgeClass }} mt-3 inline-flex rounded-full px-2 py-1 text-xs font-semibold">
                             {{ ucfirst($request->status) }}
                         </span>
+
+                        @if ($request->status === 'accepted')
+                            <a href="{{ route('messages.show', $request) }}" class="mt-3 inline-flex rounded-md bg-teal-600 px-3 py-2 text-xs font-semibold text-white hover:bg-teal-700">
+                                Message
+                            </a>
+                        @endif
                     </article>
                 @endforeach
             </div>
@@ -137,6 +151,7 @@
                             <th class="px-4 py-3 text-left font-bold text-slate-700">Owner</th>
                             <th class="px-4 py-3 text-left font-bold text-slate-700">Message</th>
                             <th class="px-4 py-3 text-left font-bold text-slate-700">Status</th>
+                            <th class="px-4 py-3 text-left font-bold text-slate-700">Action</th>
                         </tr>
                     </thead>
                     <tbody class="divide-y divide-slate-100 bg-white">
@@ -156,6 +171,15 @@
                                     <span class="{{ $outgoingBadgeClass }} rounded-full px-2 py-1 text-xs font-semibold">
                                         {{ ucfirst($request->status) }}
                                     </span>
+                                </td>
+                                <td class="px-4 py-3">
+                                    @if ($request->status === 'accepted')
+                                        <a href="{{ route('messages.show', $request) }}" class="inline-flex rounded-md bg-teal-600 px-3 py-1.5 text-xs font-semibold text-white hover:bg-teal-700">
+                                            Message
+                                        </a>
+                                    @else
+                                        <span class="text-xs font-medium text-slate-500">No action</span>
+                                    @endif
                                 </td>
                             </tr>
                         @endforeach

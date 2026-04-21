@@ -15,5 +15,13 @@
                 <dd class="mt-1 text-base font-semibold text-slate-900">{{ auth()->user()->email }}</dd>
             </div>
         </dl>
+
+        <div class="mt-6 flex flex-wrap gap-3">
+            <a href="{{ route('dashboard') }}" class="btn-secondary">Back to Dashboard</a>
+            <form action="{{ route('logout') }}" method="POST">
+                @csrf
+                <button type="submit" class="btn-primary">Logout</button>
+            </form>
+        </div>
     </div>
 @endsection

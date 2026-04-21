@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\BookController;
+use App\Http\Controllers\MessageController;
 use App\Http\Controllers\RequestController;
 use Illuminate\Support\Facades\Route;
 
@@ -34,6 +35,9 @@ Route::middleware('auth')->group(function () {
     Route::get('/requests', [RequestController::class, 'incomingRequests'])->name('requests.index');
     Route::post('/requests/{id}/accept', [RequestController::class, 'accept'])->name('requests.accept');
     Route::post('/requests/{id}/reject', [RequestController::class, 'reject'])->name('requests.reject');
+
+    Route::get('/messages/{exchangeRequest}', [MessageController::class, 'show'])->name('messages.show');
+    Route::post('/messages/{exchangeRequest}', [MessageController::class, 'store'])->name('messages.store');
 
     Route::get('/profile', function () {
         return view('profile');

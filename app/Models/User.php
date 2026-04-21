@@ -45,4 +45,14 @@ class User extends Authenticatable
     {
         return $this->hasMany(ExchangeRequest::class, 'requester_id');
     }
+
+    public function sentMessages(): HasMany
+    {
+        return $this->hasMany(ExchangeMessage::class, 'sender_id');
+    }
+
+    public function receivedMessages(): HasMany
+    {
+        return $this->hasMany(ExchangeMessage::class, 'receiver_id');
+    }
 }
